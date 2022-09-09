@@ -1,6 +1,7 @@
 // Leaflet Challenge 1
 // Started to modularise for challenge 2 - clean up
 
+// Defining functions
 function createFeatures(earthquakeData) {
 
   function onEachFeature(feature, layer) {
@@ -66,6 +67,7 @@ function markerSize(magnitude) {
   return magnitude * 4;
 }
 
+// Creating marker data from geoJSON
 var earthquakes = L.geoJSON(earthquakeData, {
   pointToLayer: function(feature, latlng) {
     return L.circleMarker(latlng, {
@@ -83,6 +85,7 @@ var earthquakes = L.geoJSON(earthquakeData, {
   createMap(earthquakes);
 }
 
+// Creating data from geoJSON for last month
 const queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 d3.json(queryUrl).then(function(data) {
