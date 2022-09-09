@@ -1,49 +1,12 @@
 // Leaflet Challenge 1
-// Started to modularise for challenge
-
-function markerSize(magnitude) {
-    return magnitude * 4;
-}
-
-function markerColor(magnitude) {
-  if (magnitude <= 1) {
-      return "#cadb86"
-  } else if (magnitude <= 2) {
-      return "#dbd986"
-  } else if (magnitude <= 3) {
-      return "#dedc7c"
-  } else if (magnitude <= 4) {
-      return "#d1ab6f"
-  } else if (magnitude <= 5) {
-      return "#c4583b"
-  } else {
-      return "#a33e22"
-  }
-};
+// Started to modularise for challenge 2 - clean up
 
 function createFeatures(earthquakeData) {
 
   function onEachFeature(feature, layer) {
     layer.bindPopup("<h2>" + feature.properties.place +
-"</h2><hr><p>" + new Date(feature.properties.time) + "</p>" + "</h2><hr><p>" + "Magnitude: " + (feature.properties.mag) + "</p>");
+    "</h2><hr><p>" + new Date(feature.properties.time) + "</p>" + "</h2><hr><p>" + "Magnitude: " + (feature.properties.mag) + "</p>");
   }
-
-  var earthquakes = L.geoJSON(earthquakeData, {
-    pointToLayer: function(feature, latlng) {
-        return L.circleMarker(latlng, {
-            radius: markerSize(feature.properties.mag),
-            fillColor: markerColor(feature.properties.mag),
-            fillOpacity: 1,
-            weight: 0.3,
-            opacity: 0.3,
-
-        });
-    },
-    onEachFeature: onEachFeature
-  });
-
-  createMap(earthquakes);
-}
 
 function createMap(earthquakes) {
 
@@ -82,6 +45,43 @@ function createMap(earthquakes) {
   legend.addTo(myMap);
 
 };
+
+function markerColor(magnitude) {
+  if (magnitude <= 1) {
+      return "#cadb86"
+  } else if (magnitude <= 2) {
+      return "#dbd986"
+  } else if (magnitude <= 3) {
+      return "#dedc7c"
+  } else if (magnitude <= 4) {
+      return "#d1ab6f"
+  } else if (magnitude <= 5) {
+      return "#c4583b"
+  } else {
+      return "#a33e22"
+  }
+};
+
+function markerSize(magnitude) {
+  return magnitude * 4;
+}
+
+var earthquakes = L.geoJSON(earthquakeData, {
+  pointToLayer: function(feature, latlng) {
+    return L.circleMarker(latlng, {
+      radius: markerSize(feature.properties.mag),
+      fillColor: markerColor(feature.properties.mag),
+      fillOpacity: 1,
+      weight: 0.3,
+      opacity: 0.3
+
+    });
+    },
+    onEachFeature: onEachFeature
+  });
+
+  createMap(earthquakes);
+}
 
 const queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
